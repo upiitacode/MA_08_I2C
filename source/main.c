@@ -1,6 +1,3 @@
-
-
-
 #include "TM4C123.h"                    // Device header
 #include "retarget_tm4c.h"
 #include "serial_stdio.h"

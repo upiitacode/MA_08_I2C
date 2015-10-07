@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\include</IncludePath>
+              <IncludePath>..\include;..\retarget\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -414,14 +414,14 @@
               <FilePath>..\source\main.c</FilePath>
             </File>
             <File>
-              <FileName>retarget.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\retarget.c</FilePath>
-            </File>
-            <File>
               <FileName>retarget_tm4c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\source\retarget_tm4c.c</FilePath>
+              <FilePath>..\retarget\source\retarget_tm4c.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\retarget\source\serial_stdio.c</FilePath>
             </File>
           </Files>
         </Group>
