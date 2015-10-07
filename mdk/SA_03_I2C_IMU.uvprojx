@@ -47,7 +47,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>sa_03</OutputName>
+          <OutputName>SA_03_I2C_IMU</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -422,6 +422,16 @@
               <FileName>serial_stdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\retarget\source\serial_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\i2c_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\mpu6050.c</FilePath>
             </File>
           </Files>
         </Group>
