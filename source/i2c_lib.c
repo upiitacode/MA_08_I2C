@@ -1,43 +1,5 @@
 #include "TM4C123.h"                    // Device header
 #include "i2c_lib.h"
-//int a;
-//int b=15;
-
-/*
-int main(){
-	float val,tempVal;
-	char tempchar[50];
-	val=0;
-	tempVal=0;
-	UART_Init();
-	dac_config();
-	printf("****ADC I2C****\n");
-	while(1){
-		dac_output((short)(((val)/(float)3.26)*((int)0xFFF)));
-		printf("Voltaje actual: %fV\n",val);
-		printf("Ingrese un valor de voltaje(0-3.26): \n");
-		gets(tempchar);
-		sscanf(tempchar,"%f",&tempVal);
-		if(val>=((float)0)&&tempVal<=((float)3.26)){
-			val=tempVal;
-		}else{
-			printf("Error: valor fuera de rango\n");
-		}	
-	}
-}
-*/
-
-void dac_output(short val){
-	unsigned char words[2];
-	words[0]=((val>>8)&0xf);
-	words[1]=(val&0xFF);
-	i2c_sendPacket(0x62,words,2);//addesss=110 0010
-}
-void dac_config(void){
-	i2c_config();
-	i2c_sendData(0x62,((0x4<<5)|(0x0<<3)|(0x0<<1)|(0x0<<0)));// Write Volatile Configuration Bits|VDD ref|Normal output|1xGain 
-}
-
 
 void i2c_config(void){
 	SYSCTL->RCGCGPIO|=0x1<<1;//Turn on GPIOB (for I2C0)
