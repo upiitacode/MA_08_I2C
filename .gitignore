@@ -1,3 +1,5 @@
+*.swp
+*.asv
 /gcc/nbproject
 /gcc/objects
 /gcc/salida.elf
