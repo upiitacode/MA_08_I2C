@@ -22,3 +22,7 @@ assert(isequal(parsed_cell,expected_cell));
 parsed_cell =tokenizeLine('ax = 2.5, bd = , az = 2654');
 expected_cell = {{'ax','2.5'},{'az','2654'}};
 assert(isequal(parsed_cell,expected_cell));
+%% Test 6: that token can ve negative number
+parsed_cell =tokenizeLine('ax = -2.5');
+expected_cell = {{'ax','-2.5'}};
+assert(isequal(parsed_cell,expected_cell));
