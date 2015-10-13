@@ -12,14 +12,36 @@ nacc_z = normAccelVector(3);
 
 theta_x = -real(atan(-nacc_y/nacc_z));
 theta_y = -real(asin(nacc_x));
-if(nacc_z < 0)
-    theta_x = theta_x + pi;
+
+if(isnan(theta_x))
+    theta_x = 0;
 end
 
-if(nacc_z < 0 )
-    theta_y = -theta_y+pi/2;
+if (nacc_x >= 0 && nacc_y >= 0 && nacc_z >=0 )
+elseif (nacc_x >= 0 && nacc_y >= 0 && nacc_z < 0 )
+    theta_x = pi + theta_x;
+    theta_y = -theta_y;
+elseif (nacc_x >= 0 && nacc_y < 0 && nacc_z >=0 )
+elseif (nacc_x >= 0 && nacc_y < 0 && nacc_z < 0 )
+    theta_x = -pi + theta_x ;
+elseif (nacc_x < 0 && nacc_y >= 0 && nacc_z >=0 )
+    theta_y = theta_y;
+elseif (nacc_x < 0 && nacc_y >= 0 && nacc_z < 0 )
+    theta_y = -theta_y;
+    theta_x = pi + theta_x;
+elseif (nacc_x < 0 && nacc_y < 0 && nacc_z >=0 )
+    theta_y = theta_y;
+    theta_x = theta_x;
+elseif (nacc_x < 0 && nacc_y < 0 && nacc_z < 0 )    
+    theta_x = -pi + theta_x ;
 end
-
+% elseif(nacc_x < 0 && nacc_y > 0)
+%    
+% elseif(nacc_x < 0 && nacc_z < 0)
+%     theta_y = pi - theta_y;
+% elseif (nacc_x > 0 && nacc_z < 0)
+%      theta_y = -pi - theta_y ;
+% end
 angles = [theta_x theta_y 0];
 
 rotation_x = [1,0,0;

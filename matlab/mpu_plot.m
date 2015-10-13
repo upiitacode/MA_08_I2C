@@ -92,7 +92,7 @@ if  hObject.Value
         handles.box_ax.String = num2str(mpuData.ax);
         handles.box_ay.String = num2str(mpuData.ay);
         handles.box_az.String = num2str(mpuData.az);
-        angles
+        angles*(180/pi)
         pause(0.01)
     end
     mpu.close()
