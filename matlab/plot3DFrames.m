@@ -14,7 +14,6 @@ axis_handle.YLim=[-1 1];
 axis_handle.ZLim=[-1 1];
 quiver3(origin,origin,origin,rotated_frame(1,:),rotated_frame(2,:),rotated_frame(3,:));
 axis on
-grid off
 hold off
 end
 
