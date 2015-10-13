@@ -8,17 +8,14 @@ void delay_ms(int delay);
 Serial_t USART0_serial = {UART0_getChar, UART0_sendChar}; 
 
 int main(){
-	UART0_init(115200);
+	char myInputBuffer[20];
+	UART0_init(9600);
 	mp6050_init();
-	serial_printf(USART0_serial,"\nIngrese comando\n");
 	while(1){
-		serial_printf(USART0_serial,"accel_x=%6d\n",mp6050_readAccel('x'));
-		serial_printf(USART0_serial,"accel_y=%6d\n",mp6050_readAccel('y'));
-		serial_printf(USART0_serial,"accel_z=%6d\n\n",mp6050_readAccel('z'));
-		serial_printf(USART0_serial,"gyro_x=%6d\n",mp6050_readGyro('x'));
-		serial_printf(USART0_serial,"gyro_y=%6d\n",mp6050_readGyro('y'));
-		serial_printf(USART0_serial,"gyro_z=%6d\n\n",mp6050_readGyro('z'));
-		delay_ms(0x2FFFFF);
+		//serial_gets(USART0_serial,myInputBuffer,20);
+		serial_printf(USART0_serial,"ax=%6f, ay=%6f, az=%6f\n",
+			mp6050_readAccel('x')*(9.8/16384.0),mp6050_readAccel('y')*(9.8/16384.0),mp6050_readAccel('z')*(9.8/16384.0));
+			delay_ms(0xFFFFF);
 	}
 }
 

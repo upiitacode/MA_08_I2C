@@ -28,4 +28,12 @@ expectedRotatedFrame  = [sqrt(1/2) -sqrt(1/2) 0;
                          0 0 1;
                          -sqrt(1/2) -sqrt(1/2) 0];
 assert((sum(sum(((angles - [-pi/2 pi/4 0]).^2))) < 0.001));
-assert((sum(sum((expectedRotatedFrame - rotatedFrame).^2)) < 0.001));    
+assert((sum(sum((expectedRotatedFrame - rotatedFrame).^2)) < 0.001));
+%% Test 4: When rotated -180 degrees in theta_x and 45 degrees in theta_x
+imuStruct = struct('ax',sqrt(1/2)*9.8,'ay',0.0,'az',-sqrt(1/2)*9.8);
+[rotatedFrame, originalFrame, angles] = getReferenceFrame(imuStruct);
+expectedRotatedFrame  = [sqrt(1/2) -sqrt(1/2) 0;
+                         0 0 1;
+                         -sqrt(1/2) -sqrt(1/2) 0];
+assert((sum(sum(((angles - [0 5/4*pi 0]).^2))) < 0.001));
+%%assert((sum(sum((expectedRotatedFrame - rotatedFrame).^2)) < 0.001));    

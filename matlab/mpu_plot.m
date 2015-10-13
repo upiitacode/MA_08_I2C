@@ -81,19 +81,22 @@ function start_stop_button_Callback(hObject, eventdata, handles)
 
 % Hint: get(hObject,'Value') returns toggle state of start_stop_button
 hObject.String = 'Stop';
-mpu = MockMPU;
-while hObject.Value
-    dataString = mpu.getString();
-    tokens = tokenizeLine(dataString);
-    mpuData = parseToken(tokens);
-    [rotatedFrame, baseFrame, angles] = getReferenceFrame(mpuData);
-    plot3DFrames(baseFrame,rotatedFrame,handles.main_axes);
-    handles.box_ax.String = num2str(mpuData.ax);
-    handles.box_ay.String = num2str(mpuData.ay);
-    handles.box_az.String = num2str(mpuData.az);
-    pause(0.5)
+if  hObject.Value
+    mpu = SerialMPU;
+    while hObject.Value
+        dataString = mpu.getString();
+        tokens = tokenizeLine(dataString);
+        mpuData = parseToken(tokens);
+        [rotatedFrame, baseFrame, angles] = getReferenceFrame(mpuData);
+        plot3DFrames(baseFrame,rotatedFrame,handles.main_axes);
+        handles.box_ax.String = num2str(mpuData.ax);
+        handles.box_ay.String = num2str(mpuData.ay);
+        handles.box_az.String = num2str(mpuData.az);
+        angles
+        pause(0.01)
+    end
+    mpu.close()
 end
-mpu.close()
 hObject.String = 'Start';
 
 
