@@ -31,13 +31,24 @@ int main(){
 	SysTick_Config(2500000);//desbordarse cada t=(f/c)=(50*10^6)/(2.5*10^6)= 0.05s 
 	
 	int16_t gx, gy, gz;
-	int16_t ax, ay, az;
+	int32_t sum_gx, sum_gy, sum_gz;
+	sum_gx = 0;
+	sum_gy = 0;
+	sum_gz = 0;
+	delay_ms(0xFFFFF);
+	for(int i = 0; i < 1000; i++){
+		mpu6050_readGyroAllAxis(&gx, &gy, &gz);
+		sum_gx += gx;
+		sum_gy += gy;
+		sum_gz += gz;
+	}
+	sum_gx /= 1000; 
+	sum_gy /= 1000;
+	sum_gz /= 1000;
 	while(1){
 		mpu6050_readGyroAllAxis(&gx, &gy, &gz);
-		mpu6050_readAccelAllAxis(&ax, &ay, &az);
-		serial_printf(USART0_serial,"ax=%d, ay=%d, Az=%6d\n",ax,ay,az);
-		//serial_printf(USART0_serial,"gx=%d, gy=%d, gz=%6d\n",gx,gy,gz);
-		delay_ms(0xFFFFF);
+		serial_printf(USART0_serial,"gx=%6d, gy=%6d, gz=%6d\n",(gx-sum_gx),(gy-sum_gy),(gz-sum_gz));
+		delay_ms(0xFFFF);
 	}
 }
 
@@ -50,10 +61,10 @@ void delay_ms(int delay){
 void SysTick_Handler(void){
 	static int last_val = 0;
 	if (last_val){
-		rgb_write(RGB_COLOR_BLACK);
+		//rgb_write(RGB_COLOR_BLACK);
 		last_val = 0;
 	}else{
-		rgb_write(RGB_COLOR_WHITE);
+		//rgb_write(RGB_COLOR_WHITE);
 		last_val = 1;
 	}
 }
