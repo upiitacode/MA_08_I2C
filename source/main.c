@@ -8,7 +8,6 @@ void delay_ms(int delay);
 Serial_t USART0_serial = {UART0_getChar, UART0_sendChar}; 
 
 int main(){
-	char myInputBuffer[20];
 	UART0_init(9600);
 	mp6050_init();
 	while(1){
