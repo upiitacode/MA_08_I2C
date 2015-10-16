@@ -22,5 +22,7 @@
 void mp6050_init(void);
 int16_t mp6050_readAccel(char axis);
 int16_t mp6050_readGyro(char axis);
+void mpu6050_readGyroAllAxis(int16_t* gx, int16_t* gy, int16_t* gz);
+void mpu6050_readAccelAllAxis(int16_t* ax, int16_t* ay, int16_t* az);
 
 #endif /*_MPU6050_H*/

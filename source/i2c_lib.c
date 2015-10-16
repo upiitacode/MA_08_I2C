@@ -6,7 +6,7 @@ void i2c_config(void){
 	SYSCTL->RCGCI2C|=0x1;//Turn on I2C0 
 	
 	//configure B2(SCL) and B3(SDA) for I2C signals
-	GPIOB->DEN|=(0x1<<2)|(0x1<<3); //digital typè
+	GPIOB->DEN|=(0x1<<2)|(0x1<<3); //digital typï¿½
 	GPIOB->PUR|=(0x1<<2)|(0x1<<3); //pull ups
 	GPIOB->ODR|=(0x1<<3); //open-drain output (only on SDA pin) 
 	GPIOB->AFSEL|=(0x1<<2)|(0x1<<3);//alternate functions
@@ -50,6 +50,34 @@ void i2c_sendPacket(unsigned char  address_7b,unsigned char  *pData,int nData){
 			I2C0->MDR=pData[nData-1];
 			I2C0->MCS=0x5;//single master transmit (STOP RUN)
 			while(i2c_isBusy());
+		}
+	}
+}
+
+void i2c_readPacket(unsigned char  address_7b,unsigned char regAddress,
+		unsigned char  *pData,int nData){
+	if(nData>0){
+		//Write register Address
+		I2C0->MSA=(address_7b<<1)|(0x0);//write uC->slave
+		I2C0->MDR=regAddress;
+		I2C0->MCS=0x3;//single master transmit (START RUN)
+		while(i2c_isBusy());
+		//read first byte 
+		I2C0->MSA=(address_7b<<1)|(0x1);//read uC<-slave
+		I2C0->MCS=(nData>1)?0xB:0x7;//single master transmit (ACK START RUN)/(STOP START RUN)
+		while(i2c_isBusy());
+		pData[0] = I2C0->MDR;
+		//This only executes if nData >= 3
+		for(int i=1; i<(nData-1); i++){
+				I2C0->MCS=0x9;//single master transmit (RUN)
+				while(i2c_isBusy());
+				pData[i] = I2C0->MDR;
+		}
+		// only  executes if nData >= 2
+		if(nData>1){
+			I2C0->MCS=0x5;//single master transmit (STOP RUN)
+			while(i2c_isBusy());
+			pData[nData-1] = I2C0->MDR;
 		}
 	}
 }

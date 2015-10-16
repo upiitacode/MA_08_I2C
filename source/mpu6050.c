@@ -36,3 +36,19 @@ int16_t mp6050_readGyro(char axis){
 	}
  	return gyro_reading;
 }
+
+void mpu6050_readAccelAllAxis(int16_t* ax, int16_t* ay, int16_t* az){
+	unsigned char accel_data[6];
+	i2c_readPacket(MPU6050_ADDRESS,MPU6050_ACCEL_XOUT_H,accel_data,6);
+	*ax = (accel_data[0] << 8) | (accel_data[1]);
+	*ay = (accel_data[2] << 8) | (accel_data[3]);
+	*az = (accel_data[4] << 8) | (accel_data[5]);
+}
+
+void mpu6050_readGyroAllAxis(int16_t* gx, int16_t* gy, int16_t* gz){
+	unsigned char gyro_data[6];
+	i2c_readPacket(MPU6050_ADDRESS,MPU6050_GYRO_XOUT_H,gyro_data,6);
+	*gx = (gyro_data[0] << 8) | (gyro_data[1]);
+	*gy = (gyro_data[2] << 8) | (gyro_data[3]);
+	*gz = (gyro_data[4] << 8) | (gyro_data[5]);
+}
