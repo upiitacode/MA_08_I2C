@@ -1,4 +1,5 @@
-#include "retarget_tm4c.h"
+#include "serial_stream_tm4c.h"
+#include "TM4C123.h"                    // Device header
 
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full
 #define UART_FR_RXFE            0x00000010  // UART Receive FIFO Empty
@@ -8,7 +9,7 @@
 #define SYSCTL_RCGC1_UART0      0x00000001  // UART0 Clock Gating Control
 #define SYSCTL_RCGC2_GPIOA      0x00000001  // port A Clock Gating Control
 
-void UART0_init(int baudrate){
+SerialUSART0::SerialUSART0(int baudrate){
 	SystemCoreClockUpdate();
 	SYSCTL->RCGC1|= SYSCTL_RCGC1_UART0; 	// Encender periferico UART0
 	SYSCTL->RCGC2|= SYSCTL_RCGC2_GPIOA; 	// Encender periferico GPIOA
@@ -25,17 +26,17 @@ void UART0_init(int baudrate){
 	GPIOA->AMSEL &= ~0x03;          // deshabilitar funciones analogicas en PA[1..0]
 }
 
-void UART0_sendChar(char c){
+void SerialUSART0::sendChar(char ch){
 	while((UART0->FR&UART_FR_TXFF) != 0){}//esperar hasta que el buffer no este lleno
-	UART0->DR = c;//poner dato en el buffer de transmisison
+	UART0->DR = ch;//poner dato en el buffer de transmisison
 }
 
-char UART0_getChar(void){
+char SerialUSART0::getChar(void){
 	while((UART0->FR&UART_FR_RXFE) != 0);
 	return ((unsigned char)((UART0->DR)&0xFF));
 }
 
-void UART3_init(int baudrate){
+SerialUSART3::SerialUSART3(int baudrate){
 	SystemCoreClockUpdate();
 	SYSCTL->RCGCUART|= (0x1<<3);// Encender periferico UART3
 	SYSCTL->RCGCGPIO|= (0x1<<2);// Encender periferico GPIOC
@@ -53,11 +54,12 @@ void UART3_init(int baudrate){
 	GPIOC->AMSEL &=~((0x1<<6)|(0x1<<7));;          // deshabilitar funciones analogicas en PA[1..0]
 }
 
-void UART3_sendChar(char c){
+void SerialUSART3::sendChar(char ch){
 	while((UART3->FR&UART_FR_TXFF) != 0){}//esperar hasta que el buffer no este lleno
-	UART3->DR = c;//poner dato en el buffer de transmisison
+	UART3->DR = ch;//poner dato en el buffer de transmisison
 }
-char UART3_getChar(void){
+
+char SerialUSART3::getChar(void){
 	while((UART3->FR&UART_FR_RXFE) != 0);
 	return ((unsigned char)((UART3->DR)&0xFF));
 }

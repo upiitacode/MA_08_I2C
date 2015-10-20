@@ -1,23 +1,23 @@
-#include "serial_stdio.h"
+#include "serial_stream.h"
 
-void serial_puts(Serial_t serial ,const char * pString){
+void Serial_stream::puts(const char * pString){
 	char newChar; 
-	int i ;
+	int i;
 	for(i = 0 ; i < 81; i++){
 		newChar = pString[i];
 		if( newChar != '\0' ){
-			serial.sendChar(newChar);
+			this->sendChar(newChar);
 		}else{
 			break;
 		}
 	}
 }
 
-int serial_gets(Serial_t  serial,char * pBuffer, int bufferSize){
+int Serial_stream::gets(char * pBuffer, int bufferSize){
 	char newChar; 
 	int i ;
 	for(i = 0 ; i < (bufferSize - 1); i++){
-		newChar = serial.getChar();
+		newChar = this->getChar();
 		if( (newChar != '\r') ){
 			pBuffer[i]=newChar;
 		}else{
@@ -31,17 +31,17 @@ int serial_gets(Serial_t  serial,char * pBuffer, int bufferSize){
 
 #define OUT_BUFFER_SIZE 80
 
-void serial_printf(Serial_t  serial, const char * format ,...){
+void Serial_stream::printf(const char * format ,...){
 	char * tempBuffer;
 	va_list args;
 	va_start(args, format);
 	#if defined ( __GNUC__ )
 	vasprintf(&tempBuffer,format, args);
 	#else	
-	tempBuffer=malloc(OUT_BUFFER_SIZE);//alocate memory manualy
+	tempBuffer=(char *)malloc(OUT_BUFFER_SIZE);//alocate memory manualy
 	vsnprintf(tempBuffer,OUT_BUFFER_SIZE,format,args);
 	#endif
 	va_end(args);
-	serial_puts(serial,tempBuffer);
+	this->puts(tempBuffer);
 	free(tempBuffer);
 }

@@ -7,8 +7,8 @@ OUTPUT_EXEC:= salida.elf
 #All the dtandard peripherial library files
 SPL_FILES:= $(notdir $(wildcard ../STM32F30x_StdPeriph_Driver/src/*.c ))
 
-C_SOURCE_FILES:= system_TM4C123.c main.c retarget_tm4c.c serial_stdio.c i2c_lib.c mpu6050.c
-CXX_SOURCE_FILES:=
+C_SOURCE_FILES:= system_TM4C123.c
+CXX_SOURCE_FILES:= main.cc serial_stream.cc serial_stream_tm4c.cc
 ASM_SOURCE_FILES:= startup_ARMCM4.S
 LINKER_FILES:=
 
@@ -20,13 +20,13 @@ ASM_OBJECTS:= $(ASM_SOURCE_FILES:.S=.o)
 
 TARGET_CHIP:= TM4C123GH6PM
 ARCH_FLAGS:= -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -Os
+COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -O0
 USER_CPP_FLAGS:=
 USER_DEFINES:= USE_STDPERIPH_DRIVER
 USER_ASM_FLAGS:= -std=c99
 USER_C_FLAGS:= -std=c99
 USER_CXX_FLAGS:= -std=c++11
-USER_LINKER_FLAGS:= -Wl,--gc-sections -specs=nano.specs --specs=nosys.specs -u _printf_float
+USER_LINKER_FLAGS:= -std=c++11 -Wl,--gc-sections -specs=nano.specs --specs=nosys.specs -u _printf_float
 
 CPP_DEFINES:= $(TARGET_CHIP) $(USER_DEFINES)
 CPP_DEFINE_FLAGS:=$(patsubst %,-D%,$(CPP_DEFINES))
