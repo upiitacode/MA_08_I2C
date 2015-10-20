@@ -1,10 +1,12 @@
-*.swp
-*.asv
 /gcc/nbproject
 /gcc/objects
-/gcc/salida.elf
+/gcc/*.elf
 /mdk/*
+tests/gmock_test
 
 !/mdk/*.uvprojx
 !/mdk/*.uvoptx
 !/mdk/RTE
+
+*.swp
+*.[oa]
