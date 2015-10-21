@@ -1,16 +1,16 @@
-SOURCE_DIRS:= device/source ../source ../retarget/source
-INCLUDE_DIRS:= device/include cmsis/include ../include ../retarget/include
-LINKER_DIRS:=
+SOURCE_DIRS:= device/source ../source ../retarget/source ../mdk/RTE/CMSIS
+INCLUDE_DIRS:= device/include cmsis/include ../include ../retarget/include ./CMSIS_RTX/include ../mdk/RTE
+LINKER_DIRS:= ./CMSIS_RTX/bin/
 
 OUTPUT_EXEC:= salida.elf
 
 #All the dtandard peripherial library files
 SPL_FILES:= $(notdir $(wildcard ../STM32F30x_StdPeriph_Driver/src/*.c ))
 
-C_SOURCE_FILES:= system_TM4C123.c
+C_SOURCE_FILES:= system_TM4C123.c RTX_Conf_CM.c
 CXX_SOURCE_FILES:= main.cc serial_stream.cc serial_stream_tm4c.cc RGBLed.cc
 ASM_SOURCE_FILES:= startup_ARMCM4.S
-LINKER_FILES:=
+LINKER_FILES:= ./CMSIS_RTX/bin/libRTX_CM4.a
 
 LD_SCRIPTS:= gcc_arm.ld
 
@@ -20,7 +20,7 @@ ASM_OBJECTS:= $(ASM_SOURCE_FILES:.S=.o)
 
 TARGET_CHIP:= TM4C123GH6PM
 ARCH_FLAGS:= -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -Os -flto
+COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -O1
 USER_CPP_FLAGS:=
 USER_DEFINES:= USE_STDPERIPH_DRIVER
 USER_ASM_FLAGS:= -std=c99
