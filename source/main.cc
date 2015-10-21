@@ -11,12 +11,12 @@ int main(){
 	osKernelInitialize();
 	osKernelStart();
 	//User application
-	led.write(RGB_COLOR_WHITE);
+	led.write(RGBLed::COLOR_WHITE);
 	serial.printf("CPU speed: %d\n",(int) SystemCoreClock);
 	while(1){
 		osDelay(500);
-		led.write(RGB_COLOR_BLUE);
+		led.write(RGBLed::COLOR_BLUE);
 		osDelay(500);
-		led.write(RGB_COLOR_GREEN);
+		led.write(RGBLed::COLOR_GREEN);
 	}
 }
