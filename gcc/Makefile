@@ -20,13 +20,13 @@ ASM_OBJECTS:= $(ASM_SOURCE_FILES:.S=.o)
 
 TARGET_CHIP:= TM4C123GH6PM
 ARCH_FLAGS:= -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -O1
+COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions
 USER_CPP_FLAGS:=
 USER_DEFINES:= USE_STDPERIPH_DRIVER
 USER_ASM_FLAGS:= -std=c99
 USER_C_FLAGS:= -std=c99
-USER_CXX_FLAGS:= -std=c++11
-USER_LINKER_FLAGS:= -std=c++11 -Wl,--gc-sections -specs=nano.specs --specs=nosys.specs -u _printf_float
+USER_CXX_FLAGS:= -std=c++11 -flto -O1
+USER_LINKER_FLAGS:= -std=c++11 -Wl,--gc-sections -specs=nano.specs --specs=nosys.specs -u _printf_float -flto -O1
 
 CPP_DEFINES:= $(TARGET_CHIP) $(USER_DEFINES)
 CPP_DEFINE_FLAGS:=$(patsubst %,-D%,$(CPP_DEFINES))
