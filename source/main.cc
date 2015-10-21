@@ -2,6 +2,7 @@
 #include "serial_stream_tm4c.h"
 #include "RGBLed.h"
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
+#include "delay.h"
 
 int main(){
 	//Iitialize system
@@ -14,9 +15,9 @@ int main(){
 	led.write(RGBLed::COLOR_WHITE);
 	serial.printf("CPU speed: %d\n",(int) SystemCoreClock);
 	while(1){
-		osDelay(500);
+		delay_ms(500);
 		led.write(RGBLed::COLOR_BLUE);
-		osDelay(500);
+		delay_ms(500);
 		led.write(RGBLed::COLOR_GREEN);
 	}
 }
