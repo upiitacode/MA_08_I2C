@@ -20,7 +20,7 @@ ASM_OBJECTS:= $(ASM_SOURCE_FILES:.S=.o)
 
 TARGET_CHIP:= TM4C123GH6PM
 ARCH_FLAGS:= -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -O0
+COMMON_FLAGS:= -Wall -g -ffunction-sections -fdata-sections -fno-exceptions -Os -flto
 USER_CPP_FLAGS:=
 USER_DEFINES:= USE_STDPERIPH_DRIVER
 USER_ASM_FLAGS:= -std=c99
