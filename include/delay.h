@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 void delay_ms(int delay);
+void delay_us(int delay_time);
 
 #ifdef __cplusplus
 }

@@ -15,9 +15,9 @@ int main(){
 	led.write(RGBLed::COLOR_WHITE);
 	serial.printf("CPU speed: %d\n",(int) SystemCoreClock);
 	while(1){
-		delay_ms(500);
+		delay_us(500000);
 		led.write(RGBLed::COLOR_BLUE);
-		delay_ms(500);
+		delay_us(500000);
 		led.write(RGBLed::COLOR_GREEN);
 	}
 }
