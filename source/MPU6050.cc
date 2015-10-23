@@ -30,7 +30,6 @@ void MPU6050::writeRegister(unsigned char regAddress,unsigned char regValue){
 }
 
 void MPU6050::deviceConfiguration(void){
-	i2c->sendData(MPU6050_ADDRESS,0x00);
 	writeRegister(0x6B, 0x01);// reset
 	writeRegister(0x6B, 0x00);//
 	writeRegister(0x1A, 0x06);// 5Hz filter
@@ -88,9 +87,9 @@ Data3D<float> MPU6050::readCompensatedGyro(void){
 
 	readGyroAllAxis(&gx, &gy, &gz);
 
-	gx = gx - offset_x;
-	gy = gx - offset_y;
-	gz = gz - offset_z;
+	gx -= offset_x;
+	gy -= offset_y;
+	gz -= offset_z;
 
 	return Data3D<float>(gx,gy,gz);
 }
