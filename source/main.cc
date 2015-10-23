@@ -20,7 +20,7 @@ SquareIntegral* integraly;
 SquareIntegral* integralz;
 Data3D<float>* filteredData;
 
-const float threshold_limit = 0.09;
+const float threshold_limit = 0.12;
 const int sampling_period_ms = 5;
 const float delta_t = (sampling_period_ms/1000.0);
 const int print_period_ms = 100;
