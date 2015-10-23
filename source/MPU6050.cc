@@ -18,6 +18,9 @@
 
 MPU6050::MPU6050(I2CBus &i2c){
 	this->i2c = &i2c;
+	this->offset_x = 0;
+	this->offset_y = 0;
+	this->offset_z = 0;
 	deviceConfiguration();
 }
 
@@ -78,4 +81,33 @@ void MPU6050::readGyroAllAxis(int16_t* gx, int16_t* gy, int16_t* gz){
 	*gx = (gyro_data[0] << 8) | (gyro_data[1]);
 	*gy = (gyro_data[2] << 8) | (gyro_data[3]);
 	*gz = (gyro_data[4] << 8) | (gyro_data[5]);
+}
+
+Data3D<float> MPU6050::readCompensatedGyro(void){
+	int16_t gx, gy, gz;
+
+	readGyroAllAxis(&gx, &gy, &gz);
+
+	gx = gx - offset_x;
+	gy = gx - offset_y;
+	gz = gz - offset_z;
+
+	return Data3D<float>(gx,gy,gz);
+}
+
+void MPU6050::calibrateGyro(void){
+	int readings = 500;
+	int16_t gx, gy, gz;
+	int sum_x = 0;
+	int sum_y = 0;
+	int sum_z = 0;
+	for(int i = 0;  i < readings; i++){
+		readGyroAllAxis(&gx, &gy, &gz);
+		sum_x += gx;
+		sum_y += gy;
+		sum_z += gz;
+	}
+	this->offset_x = sum_x/readings;
+	this->offset_y = sum_y/readings;
+	this->offset_z = sum_z/readings;
 }
