@@ -11,7 +11,7 @@ TESTS:= gmock_test
 TEST_FILES:= $(notdir $(wildcard ./source/*.cc ))
 
 C_SOURCE_FILES:=
-CXX_SOURCE_FILES:= $(TEST_FILES)
+CXX_SOURCE_FILES:= $(TEST_FILES) SquareIntegral.cc
 ASM_SOURCE_FILES:=
 LINKER_FILES:= $(MYLIB)
 
