@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'SA_03_I2C_IMU' 
+ * Project: 'SA_04_MPU_Gyro' 
  * Target:  'Target 1' 
  */
 
@@ -12,5 +12,5 @@
 
 #define RTE_CMSIS_RTOS                  /* CMSIS-RTOS */
         #define RTE_CMSIS_RTOS_RTX              /* CMSIS-RTOS Keil RTX */
- 
+
 #endif /* RTE_COMPONENTS_H */
