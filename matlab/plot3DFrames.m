@@ -6,8 +6,8 @@ axes(axis_handle);
 hold off
 quiver3(origin,origin,origin,base_frame(1,:),base_frame(2,:),base_frame(3,:));
 hold on
-az = 135;
-el = 36;
+az = 115;
+el = 22;
 view(az, el);
 axis_handle.XLim=[-1 1];
 axis_handle.YLim=[-1 1];

@@ -27,7 +27,7 @@ const int print_period_ms = 100;
 
 int main(){
 	//Initialize system
-	SerialUSART0 serial(38400);
+	SerialUSART0 serial(9600);
 	led = new RGBLed;
 	I2CBus0 i2c;
 	mpu = new MPU6050(i2c,MPU6050::ScaleRange1000);

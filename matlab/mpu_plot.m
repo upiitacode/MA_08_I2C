@@ -87,12 +87,12 @@ if  hObject.Value
         dataString = mpu.getString();
         tokens = tokenizeLine(dataString);
         mpuData = parseToken(tokens);
-        [rotatedFrame, baseFrame, angles] = getReferenceFrame(mpuData);
+        theta = [mpuData.Tx mpuData.Ty mpuData.Tz];
+        [rotatedFrame, baseFrame] = getRotatedFrame(theta);
         plot3DFrames(baseFrame,rotatedFrame,handles.main_axes);
-        handles.box_ax.String = num2str(mpuData.ax);
-        handles.box_ay.String = num2str(mpuData.ay);
-        handles.box_az.String = num2str(mpuData.az);
-        angles*(180/pi)
+        handles.box_ax.String = num2str(theta(1));
+        handles.box_ay.String = num2str(theta(2));
+        handles.box_az.String = num2str(theta(3));
         pause(0.01)
     end
     mpu.close()
