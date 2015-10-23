@@ -16,11 +16,12 @@
 #define MPU6050_GYRO_ZOUT_H 0x37
 #define MPU6050_GYRO_ZOUT_L 0x48
 
-MPU6050::MPU6050(I2CBus &i2c){
+MPU6050::MPU6050(I2CBus &i2c, int scaleRange){
 	this->i2c = &i2c;
 	this->offset_x = 0;
 	this->offset_y = 0;
 	this->offset_z = 0;
+	this->scaleRange = scaleRange;
 	deviceConfiguration();
 }
 
@@ -84,14 +85,14 @@ void MPU6050::readGyroAllAxis(int16_t* gx, int16_t* gy, int16_t* gz){
 
 Data3D<float> MPU6050::readCompensatedGyro(void){
 	int16_t gx, gy, gz;
-
+	float scale = this->scaleRange * (2.0/65535.0);
 	readGyroAllAxis(&gx, &gy, &gz);
 
 	gx -= offset_x;
 	gy -= offset_y;
 	gz -= offset_z;
 
-	return Data3D<float>(gx,gy,gz);
+	return Data3D<float>((gx * scale),(gy * scale),(gz * scale));
 }
 
 void MPU6050::calibrateGyro(void){
